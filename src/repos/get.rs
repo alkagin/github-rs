@@ -48,6 +48,14 @@ new_type!(
     PullsNumberRequestedReviewers
     PullsNumberMerge
     Readme
+    Releases
+    ReleasesLatest
+    ReleasesAssets
+    ReleasesAssetsId
+    ReleasesId
+    ReleasesIdAssets
+    ReleasesTags
+    ReleasesTagsTag
     Repo
     Repos
     Stargazers
@@ -128,6 +136,21 @@ from!(
     @PullsNumber
        -> PullsNumberMerge = "merge"
 
+    @Releases
+       -> ReleasesAssets = "assets"
+    @ReleasesAssets
+       => ReleasesAssetsId
+    @Releases
+       -> ReleasesLatest = "latest"
+    @Releases
+       => ReleasesId
+    @ReleasesId
+       -> ReleasesIdAssets = "assets"
+    @Releases
+       -> ReleasesTags = "tags"
+    @ReleasesTags
+       => ReleasesTagsTag
+
     @GetQueryBuilder
        -> Repos = "repos"
     @Owner
@@ -155,6 +178,7 @@ from!(
     @Repo
        -> Pulls = "pulls"
        -> Issues = "issues"
+       -> Releases = "releases"
     @Repo
        -> Readme = "readme"
     @Repo
@@ -238,6 +262,27 @@ impl_macro!(
     @Owner
         |
         |=> repo -> Repo = repo_str
+    @Releases
+        |=> latest -> ReleasesLatest
+        |
+    @Releases
+        |=> assets -> ReleasesAssets
+        |
+    @ReleasesAssets
+        |
+        |=> id -> ReleasesAssetsId = id_str
+    @Releases
+        |
+        |=> id -> ReleasesId = id_str
+    @ReleasesId
+        |=> assets -> ReleasesIdAssets
+        |
+    @Releases
+        |=> tags -> ReleasesTags
+        |
+    @ReleasesTags
+        |
+        |=> tag -> ReleasesTagsTag = tag_str
     @Repo
         |=> assignees ->  Assignees
         |=> branches ->  Branches
@@ -252,6 +297,7 @@ impl_macro!(
         |=> notifications -> Notifications
         |=> pulls -> Pulls
         |=> readme -> Readme
+        |=> releases -> Releases
         |=> stargazers -> Stargazers
         |=> subscribers -> Subscribers
         |=> subscription -> Subscription
@@ -329,6 +375,14 @@ exec!(PullsNumberFiles);
 exec!(PullsNumberRequestedReviewers);
 exec!(PullsNumberMerge);
 exec!(Readme);
+exec!(Releases);
+exec!(ReleasesLatest);
+exec!(ReleasesAssets);
+exec!(ReleasesAssetsId);
+exec!(ReleasesId);
+exec!(ReleasesIdAssets);
+exec!(ReleasesTags);
+exec!(ReleasesTagsTag);
 exec!(Repo);
 exec!(Stargazers);
 exec!(Subscribers);
