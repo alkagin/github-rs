@@ -378,7 +378,7 @@ exec!(Readme);
 exec!(Releases);
 exec!(ReleasesLatest);
 exec!(ReleasesAssets);
-exec!(ReleasesAssetsId);
+//exec!(ReleasesAssetsId);
 exec!(ReleasesId);
 exec!(ReleasesIdAssets);
 exec!(ReleasesTags);
